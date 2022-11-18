@@ -14,12 +14,16 @@ $ vagrant up
 ```
 $ vagrant status
 ```
+Otput:
+
 ```
 Current machine states:
 nfss                      running (virtualbox)
 nfsc                      running (virtualbox)
 ```
-        ***Настраиваем SERVER**
+
+# Настраиваем SERVER
+        
 Заходим на сервер для настройки NFS:
 ```
 $ vagrant ssh nfss
@@ -51,7 +55,7 @@ $ firewall-cmd --add-service="nfs3" \
 $ firewall-cmd --reload
 
 ```
-Включаем сервер NFS:
+Включаем сервис NFS:
 ```
 $ systemctl enable nfs --now
 ```
@@ -94,8 +98,9 @@ tcp    LISTEN     0      128    [::]:20048              [::]:*                  
 $ mkdir -p /srv/share/upload
 $ chown -R nfsnobody:nfsnobody /srv/share
 $ chmod 0777 /srv/share/upload
-
+```
 Output:
+```
 [root@nfss ~]# mkdir -p /srv/share/upload
 
 [root@nfss ~]# chown -R nfsnobody:nfsnobody /srv/share
@@ -112,6 +117,7 @@ drwxr-xr-x. 3 nfsnobody nfsnobody 20 Nov 18 10:38 ..
 $ cat << EOF > /etc/exports
 /srv/share 192.168.50.11/32(rw,sync,root_squash)
 EOF
+```
 Output:
 [root@nfss ~]# cat << EOF > /etc/exports
 > /srv/share 192.168.50.11/32(rw,sync,root_squash)
@@ -129,13 +135,14 @@ $ exportfs -r
 Проверяем экспортированную директорию следующей командой:
 ```
 $ exportfs -s
-
+```
 Output:
 [root@nfss ~]# exportfs -s
 /srv/share  192.168.50.11/32(sync,wdelay,hide,no_subtree_check,sec=sys,rw,secure,root_squash,no_all_squash)
 ```
 
-        #Настраиваем SERVER
+# Настраиваем SERVER
+    
         
 Заходим на сервер CLIENT:
 ```
@@ -159,10 +166,12 @@ Output:
 Created symlink from /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service to /usr/lib/systemd/system/firewalld.service.
 Created symlink from /etc/systemd/system/multi-user.target.wants/firewalld.service to /usr/lib/systemd/system/firewalld.service.
 
+```
 $ systemctl status firewalld
-
+```
 Output:
 
+```
 ● firewalld.service - firewalld - dynamic firewall daemon
    Loaded: loaded (/usr/lib/systemd/system/firewalld.service; enabled; vendor preset: enabled)
    Active: active (running) since Fri 2022-11-18 10:50:10 UTC; 16s ago
@@ -172,12 +181,12 @@ Output:
            └─3391 /usr/bin/python2 -Es /usr/sbin/firewalld --nofork --nopid
 ```
 
-Добавляем в /etc/fstab строку (это нужно сделать для автомонтирования /mnt)
+Добавляем в `/etc/fstab` строку (это нужно сделать для автомонтирования /mnt)
 ```
 $ echo "192.168.50.10:/srv/share/ /mnt nfs vers=3,proto=udp,noauto,x-systemd.automount 0 0" >> /etc/fstab
-
+```
 Output:
-
+```
 [root@nfsc ~]# cat /etc/fstab | grep 192.168.50.10
 192.168.50.10:/srv/share/ /mnt nfs vers=3,proto=udp,noauto,x-systemd.automount 0 0
 ```
@@ -191,14 +200,15 @@ $ systemctl restart remote-fs.target
 ```
 $ cd /mnt/
 $ mount | grep mnt
-
+```
 Output:
-
+```
 [root@nfsc mnt]#  mount | grep mnt
 systemd-1 on /mnt type autofs (rw,relatime,fd=46,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=26895)
 192.168.50.10:/srv/share/ on /mnt type nfs (rw,relatime,vers=3,rsize=32768,wsize=32768,namlen=255,hard,proto=udp,timeo=11,retrans=3,sec=sys,mountaddr=192.168.50.10,mountvers=3,mountport=20048,mountproto=udp,local_lock=none,addr=192.168.50.10)
 ```
-На это настройка Клиента завершается!
+
+# На это настройка Клиента завершается!
 
 Заходим на сервер nfss:
 ```
@@ -211,7 +221,9 @@ $ cd /srv/share/upload
 Создаём тестовый файл:
 ```
 $ ip addr | grep 192.168 >> ./check_file.txt
-
+```
+Output:
+```
 [root@nfss upload]# ls -lah
 total 4.0K
 drwxrwxrwx. 2 nfsnobody nfsnobody 28 Nov 18 11:08 .
@@ -240,23 +252,10 @@ drwxr-xr-x. 3 nfsnobody nfsnobody 20 Nov 18 10:38 ..
     inet 192.168.50.10/24 brd 192.168.50.255 scope global noprefixroute eth1
 [root@nfsc upload]#
 ```
-Здесь же создаем файл:
-```
-$ ip addr | grep 192.168 >> ./check_file_from_client.txt
-
-Output:
-[root@nfsc upload]# ip addr | grep 192.168 >> ./check_file_from_client.txt
-[root@nfsc upload]# ll
-total 8
--rw-r--r--. 1 nfsnobody nfsnobody 77 Nov 18 11:12 check_file_from_client.txt
--rw-r--r--. 1 root      root      77 Nov 18 11:08 check_file.txt
-[root@nfsc upload]# cat check_file_from_client.txt
-    inet 192.168.50.11/24 brd 192.168.50.255 scope global noprefixroute eth1
+```            
+# Проверяем сервер nfss:
 
 ```
-
-        #Проверяем сервер nfss:
-        
 ```
 [root@nfss upload]# reboot
 Connection to 127.0.0.1 closed by remote host.
@@ -287,10 +286,11 @@ total 8
    CGroup: /system.slice/firewalld.service
            └─402 /usr/bin/python2 -Es /usr/sbin/firewalld --nofork --nopid
 [vagrant@nfss ~]$
-
+```
+```
+# Проверяем клиент nfsс:
 ```
 
-        #Проверяем клиент nfsс:
 ```
 [root@nfsc upload]# reboot
 Connection to 127.0.0.1 closed by remote host.
