@@ -135,7 +135,7 @@ Output:
 /srv/share  192.168.50.11/32(sync,wdelay,hide,no_subtree_check,sec=sys,rw,secure,root_squash,no_all_squash)
 ```
 
-        ***Настраиваем SERVER**
+        #Настраиваем SERVER
         
 Заходим на сервер CLIENT:
 ```
@@ -255,7 +255,7 @@ total 8
 
 ```
 
-        **Проверяем сервер nfss:**
+        #Проверяем сервер nfss:
         
 ```
 [root@nfss upload]# reboot
@@ -290,7 +290,7 @@ total 8
 
 ```
 
-        **Проверяем клиент nfsс:**
+        #Проверяем клиент nfsс:
 ```
 [root@nfsc upload]# reboot
 Connection to 127.0.0.1 closed by remote host.
