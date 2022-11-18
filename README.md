@@ -170,6 +170,7 @@ Created symlink from /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.servi
 Created symlink from /etc/systemd/system/multi-user.target.wants/firewalld.service to /usr/lib/systemd/system/firewalld.service.
 
 ```
+```
 $ systemctl status firewalld
 ```
 Output:
@@ -184,7 +185,7 @@ Output:
            └─3391 /usr/bin/python2 -Es /usr/sbin/firewalld --nofork --nopid
 ```
 
-Добавляем в `/etc/fstab` строку (это нужно сделать для автомонтирования /mnt)
+Добавляем в `/etc/fstab` строку (это нужно сделать для автомонтирования /mnt):
 ```
 $ echo "192.168.50.10:/srv/share/ /mnt nfs vers=3,proto=udp,noauto,x-systemd.automount 0 0" >> /etc/fstab
 ```
@@ -213,7 +214,9 @@ systemd-1 on /mnt type autofs (rw,relatime,fd=46,pgrp=1,timeout=0,minproto=5,max
 
 # На это настройка Клиента завершается!
 
+
 Заходим на сервер nfss:
+
 ```
 $ vagrant ssh nfss
 ```
