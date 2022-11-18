@@ -112,13 +112,15 @@ drwxrwxrwx. 2 nfsnobody nfsnobody  6 Nov 18 10:38 .
 drwxr-xr-x. 3 nfsnobody nfsnobody 20 Nov 18 10:38 ..
 [root@nfss ~]# chmod 0777 /srv/share/upload
  ```
- Создаём в файле /etc/export структуру, которая позволит экспортировать ранее созданную директорию:
- ```
+
+Создаём в файле /etc/export структуру, которая позволит экспортировать ранее созданную директорию:
+```
 $ cat << EOF > /etc/exports
 /srv/share 192.168.50.11/32(rw,sync,root_squash)
 EOF
 ```
 Output:
+```
 [root@nfss ~]# cat << EOF > /etc/exports
 > /srv/share 192.168.50.11/32(rw,sync,root_squash)
 > EOF
@@ -137,6 +139,7 @@ $ exportfs -r
 $ exportfs -s
 ```
 Output:
+```
 [root@nfss ~]# exportfs -s
 /srv/share  192.168.50.11/32(sync,wdelay,hide,no_subtree_check,sec=sys,rw,secure,root_squash,no_all_squash)
 ```
