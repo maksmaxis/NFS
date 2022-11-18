@@ -22,7 +22,7 @@ nfss                      running (virtualbox)
 nfsc                      running (virtualbox)
 ```
 
-# Настраиваем SERVER
+# Настраиваем SERVER nfss
         
 Заходим на сервер для настройки NFS:
 ```
@@ -144,7 +144,7 @@ Output:
 /srv/share  192.168.50.11/32(sync,wdelay,hide,no_subtree_check,sec=sys,rw,secure,root_squash,no_all_squash)
 ```
 
-# Настраиваем SERVER
+# Настраиваем CLIENT server nfsc
     
         
 Заходим на сервер CLIENT:
