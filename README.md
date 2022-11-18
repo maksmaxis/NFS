@@ -125,7 +125,7 @@ Output:
 > /srv/share 192.168.50.11/32(rw,sync,root_squash)
 > EOF
  ```
-Проверяем файл /etc/exports:
+Проверяем файл `/etc/exports`:
 ```
 [root@nfss ~]# cat /etc/exports
 /srv/share 192.168.50.11/32(rw,sync,root_squash)
@@ -185,7 +185,7 @@ Output:
            └─3391 /usr/bin/python2 -Es /usr/sbin/firewalld --nofork --nopid
 ```
 
-Добавляем в `/etc/fstab` строку (это нужно сделать для автомонтирования /mnt):
+Добавляем в `/etc/fstab` строку (это нужно сделать для автомонтирования `/mnt`):
 ```
 $ echo "192.168.50.10:/srv/share/ /mnt nfs vers=3,proto=udp,noauto,x-systemd.automount 0 0" >> /etc/fstab
 ```
@@ -212,7 +212,7 @@ systemd-1 on /mnt type autofs (rw,relatime,fd=46,pgrp=1,timeout=0,minproto=5,max
 192.168.50.10:/srv/share/ on /mnt type nfs (rw,relatime,vers=3,rsize=32768,wsize=32768,namlen=255,hard,proto=udp,timeo=11,retrans=3,sec=sys,mountaddr=192.168.50.10,mountvers=3,mountport=20048,mountproto=udp,local_lock=none,addr=192.168.50.10)
 ```
 
-# На это настройка Клиента завершается!
+# На этом настройка Клиента завершается!
 
 
 Заходим на сервер nfss:
@@ -220,7 +220,7 @@ systemd-1 on /mnt type autofs (rw,relatime,fd=46,pgrp=1,timeout=0,minproto=5,max
 ```
 $ vagrant ssh nfss
 ```
-Переходим в каталог /srv/share/upload:
+Переходим в каталог `/srv/share/upload`:
 ```
 $ cd /srv/share/upload
 ```
@@ -258,10 +258,10 @@ drwxr-xr-x. 3 nfsnobody nfsnobody 20 Nov 18 10:38 ..
     inet 192.168.50.10/24 brd 192.168.50.255 scope global noprefixroute eth1
 [root@nfsc upload]#
 ```
-```            
+           
 # Проверяем сервер nfss:
 
-```
+
 ```
 [root@nfss upload]# reboot
 Connection to 127.0.0.1 closed by remote host.
@@ -293,9 +293,9 @@ total 8
            └─402 /usr/bin/python2 -Es /usr/sbin/firewalld --nofork --nopid
 [vagrant@nfss ~]$
 ```
-```
+
 # Проверяем клиент nfsс:
-```
+
 
 ```
 [root@nfsc upload]# reboot
